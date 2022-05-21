@@ -46,8 +46,10 @@ def post_user_method():
     res = request.get_json()
     if type(res) != dict:
         abort(400, {'message': 'Not a JSON'})
-    if 'name' not in res:
-        abort(400, {'message': 'Missing name'})
+    if 'email' not in res:
+        abort(400, {'message': 'Missing email'})
+    if 'password' not in res:
+        abort(400, {'message': 'Missing password'})
     new_user = User(**res)
     new_user.save()
     return jsonify(new_user.to_dict()), 201
