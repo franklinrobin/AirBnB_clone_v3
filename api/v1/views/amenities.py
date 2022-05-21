@@ -29,7 +29,7 @@ def get_amenity_method(amenity_id):
 
 @app_views.route('/amenities/<amenity_id>', methods=['DELETE'],
                  strict_slashes=False)
-def delete_method(amenity_id):
+def delete_amenity_method(amenity_id):
     if amenity_id is None:
         abort(404)
     amnit = storage.get(Amenity, amenity_id)
@@ -42,7 +42,7 @@ def delete_method(amenity_id):
 
 @app_views.route('/amenities', methods=['POST'],
                  strict_slashes=False)
-def post_method():
+def post_amenity_method():
     res = request.get_json()
     if type(res) != dict:
         return abort(400, {'message': 'Not a JSON'})
@@ -55,7 +55,7 @@ def post_method():
 
 @app_views.route('/amenities/<amenity_id>', methods=['PUT'],
                  strict_slashes=False)
-def put_method(amenity_id):
+def put_amenity_method(amenity_id):
     amnit = storage.get(Amenity, amenity_id)
     if amnit is None:
         abort(404)
