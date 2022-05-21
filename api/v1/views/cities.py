@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Create a new view for State objects that handles
+"""Create a new view for City objects that handles
 all default RESTFul API actions"""
 from models import storage
 from models.state import State
@@ -57,12 +57,13 @@ def post_city_method(state_id):
     if 'name' not in res:
         abort(400, {'message': 'Missing name'})
     new_city = City(**res)
+    new_city.state_id = state_id
     new_city.save()
     return jsonify(new_city.to_dict()), 201
 
 
 @app_views.route('/cities/<city_id>', methods=['PUT'],
-        strict_slashes=False)
+                 strict_slashes=False)
 def put_city_method(city_id):
     if city_id is None:
         abort(404)
@@ -73,7 +74,7 @@ def put_city_method(city_id):
     if type(res) != dict:
         return abort(400, {'message': 'Not a JSON'})
     for key, value in res.items():
-        if key not in ["id", "city_id", "created_at", "updated_at"]:
-            setattr(state, key, value)
+        if key not in ["id", "state_id", "created_at", "updated_at"]:
+            setattr(city, key, value)
     storage.save()
     return jsonify(city.to_dict()), 200
