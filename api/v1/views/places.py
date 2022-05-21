@@ -6,6 +6,7 @@ all default RESTFul API actions
 from models import storage
 from models.city import City
 from models.place import Place
+from models.user import User
 from api.v1.views import app_views
 from flask import jsonify, abort, request
 
@@ -18,7 +19,7 @@ def get_city_place_method(city_id):
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
-    return jsonify([place.to_dict() for place in city.place])
+    return jsonify([place.to_dict() for place in city.places])
 
 
 @app_views.route('/places/<place_id>', methods=['GET'],
@@ -71,17 +72,17 @@ def post_place_method(city_id):
 
 @app_views.route('/places/<place_id>', methods=['PUT'],
                  strict_slashes=False)
-def put_place_method(city_id):
-    if city_id is None:
+def put_place_method(place_id):
+    if place_id is None:
         abort(404)
-    city = storage.get(City, city_id)
-    if city is None:
+    place = storage.get(Place, place_id)
+    if place is None:
         abort(404)
     res = request.get_json()
     if type(res) != dict:
         return abort(400, {'message': 'Not a JSON'})
     for key, value in res.items():
         if key not in ["id", "user_id", "city_id", "created_at", "updated_at"]:
-            setattr(city, key, value)
+            setattr(place, key, value)
     storage.save()
-    return jsonify(city.to_dict()), 200
+    return jsonify(place.to_dict()), 200
