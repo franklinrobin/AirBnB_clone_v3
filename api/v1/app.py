@@ -6,16 +6,15 @@ starts Flask
 from models import storage
 from api.v1.views import app_views
 from flask import Flask
-app = Flask(__name__)
 
+
+app = Flask(__name__)
+app.register_blueprint(app_views)
 
 @app.teardown_appcontext
-def teardown_db(exception):
+def teardown_app(exception):
     """closes the storage on teardown"""
     storage.close()
-
-
-app.register_blueprint(app_views)
 
 
 if __name__ == '__main__':
