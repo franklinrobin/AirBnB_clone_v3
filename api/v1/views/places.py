@@ -47,7 +47,7 @@ def del_place_method(place_id):
 
 @app_views.route('cities/<city_id>/places', methods=['POST'],
                  strict_slashes=False)
-def post_city_method(city_id):
+def post_place_method(city_id):
     if city_id is None:
         abort(404)
     city = storage.get(City, city_id)
@@ -69,9 +69,9 @@ def post_city_method(city_id):
     return jsonify(new_place.to_dict()), 201
 
 
-@app_views.route('/cities/<city_id>', methods=['PUT'],
+@app_views.route('/places/<place_id>', methods=['PUT'],
                  strict_slashes=False)
-def put_city_method(city_id):
+def put_place_method(city_id):
     if city_id is None:
         abort(404)
     city = storage.get(City, city_id)
@@ -81,7 +81,7 @@ def put_city_method(city_id):
     if type(res) != dict:
         return abort(400, {'message': 'Not a JSON'})
     for key, value in res.items():
-        if key not in ["id", "state_id", "created_at", "updated_at"]:
+        if key not in ["id", "user_id", "city_id", "created_at", "updated_at"]:
             setattr(city, key, value)
     storage.save()
     return jsonify(city.to_dict()), 200
