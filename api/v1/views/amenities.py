@@ -64,6 +64,6 @@ def put_amenity_method(amenity_id):
         return abort(400, {'message': 'Not a JSON'})
     for key, value in res.items():
         if key not in ["id", "created_at", "updated_at"]:
-            setattr(amenity, key, value)
+            setattr(amnit, key, value)
     storage.save()
     return jsonify(amnit.to_dict()), 200
