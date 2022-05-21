@@ -14,7 +14,7 @@ from flask import jsonify, abort, request
 def get_full_amenity_method():
     new_dict = []
     for obj in storage.all(Amenity).values():
-        dict_.append(obj.to_dict())
+        new_dict.append(obj.to_dict())
     return jsonify(new_dict)
 
 
