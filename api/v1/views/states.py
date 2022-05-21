@@ -9,10 +9,11 @@ from models import storage
 from models.state import State
 from api.v1.views import app_views
 
+
 @app_views.route("/states", defaults={'state_id': None}, strict_slashes=False,
-                methods=["GET", "POST", "DELETE", "PUT"])
+                 methods=["GET", "POST", "DELETE", "PUT"])
 @app_views.route("/states/<state_id>", strict_slashes=False,
-                methods=["GET", "POST", "DELETE", "PUT"])
+                 methods=["GET", "POST", "DELETE", "PUT"])
 def http_methods(state_id):
     '''
     Handle the HTTP Methods
