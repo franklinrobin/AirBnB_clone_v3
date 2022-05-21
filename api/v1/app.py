@@ -23,7 +23,7 @@ def teardown_app(exception):
 def page_not_found(e):
     '''Return this page when a 404 error appear'''
     data = {"error": "Not found"}
-    return flask.jsonify(data)
+    return flask.jsonify(data), 404
 
 
 if __name__ == '__main__':
