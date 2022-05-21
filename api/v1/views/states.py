@@ -30,9 +30,9 @@ def http_methods(state_id):
         if request.method == "POST":
             data = request.get_json()
             if type(data) is not dict:
-                abort(400, message='Not a JSON')
+                abort(400, {'message': 'Not a JSON'})
             if not data['name']:
-                abort(400, message='Missing name')
+                abort(400, {'message': 'Missing name'})
             new_state = State(**data)
             new_state.save()
             return flask.jsonify(new_state.to_dict()), 201
@@ -50,7 +50,7 @@ def http_methods(state_id):
                 return abort(404)
             n_data = request.get_json()
             if type(n_data) is not dict:
-                abort(400, message='Not a JSON')
+                abort(400, {'message': 'Not a JSON'})
             for key, value in n_data.items():
                 if key not in ["id", "state_id", "created_at", "updated_at"]:
                     setattr(d_state, key, value)
