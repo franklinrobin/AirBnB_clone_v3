@@ -19,7 +19,7 @@ def get_place_review_method(place_id):
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
-    return jsonify([review.to_dict() for review in places.review])
+    return jsonify([review.to_dict() for review in place.reviews])
 
 
 @app_views.route('/reviews/<review_id>', methods=['GET'],
